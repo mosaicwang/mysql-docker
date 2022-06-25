@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-echo "TTEESSTT"
 set -e
 
 echo "DEBUG 1"
@@ -32,8 +31,6 @@ if [ "$1" = 'mysqlrouter' ]; then
 	    echo "Exiting."
 	    exit 1
     fi
-
-		echo "进入第一个IF"
 
     PASSFILE=$(mktemp)
     echo "$MYSQL_PASSWORD" > "$PASSFILE"
