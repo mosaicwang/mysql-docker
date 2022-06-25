@@ -29,6 +29,6 @@ COPY run.sh /run.sh
 HEALTHCHECK \
 	CMD mysqladmin --port 6446 --protocol TCP ping 2>&1 | grep Access || exit 1
 EXPOSE 6446 6447 6448 6449 8443
-USER 999:999
+# USER 999:999
 ENTRYPOINT ["/run.sh"]
 CMD ["mysqlrouter"]

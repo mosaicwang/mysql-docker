@@ -1,0 +1,1 @@
+docker build --tag mysql-router:8.0.29-1.0.8-router-wht -f Dockerfile .

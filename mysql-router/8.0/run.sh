@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+echo "TTEESSTT"
 set -e
 
+echo "DEBUG 1"
 if [ "$1" = 'mysqlrouter' ]; then
     if [[ -z $MYSQL_HOST || -z $MYSQL_PORT || -z $MYSQL_USER || -z $MYSQL_PASSWORD ]]; then
 	    echo "We require all of"
@@ -30,6 +32,8 @@ if [ "$1" = 'mysqlrouter' ]; then
 	    echo "Exiting."
 	    exit 1
     fi
+
+		echo "进入第一个IF"
 
     PASSFILE=$(mktemp)
     echo "$MYSQL_PASSWORD" > "$PASSFILE"
@@ -83,7 +87,7 @@ EOF
     fi
     if [ "$MYSQL_CREATE_ROUTER_USER" = "0" ]; then
         echo "[Entrypoint] Succesfully contacted mysql server at $MYSQL_HOST. Trying to bootstrap reusing account \"$MYSQL_USER\"."
-        mysqlrouter --bootstrap "$MYSQL_USER@$MYSQL_HOST:$MYSQL_PORT" --directory /tmp/mysqlrouter --force --account-create=never --account=$MYSQL_USER $opt_user $MYSQL_ROUTER_BOOTSTRAP_EXTRA_OPTIONS < "$PASSFILE" || exit 1
+        mysqlrouter --bootstrap "$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST:$MYSQL_PORT" --directory /tmp/mysqlrouter --force --account-create=never --account=$MYSQL_USER $opt_user $MYSQL_ROUTER_BOOTSTRAP_EXTRA_OPTIONS < "$PASSFILE" || exit 1
     else
         echo "[Entrypoint] Succesfully contacted mysql server at $MYSQL_HOST. Trying to bootstrap."
         mysqlrouter --bootstrap "$MYSQL_USER@$MYSQL_HOST:$MYSQL_PORT" --directory /tmp/mysqlrouter --force $opt_user $MYSQL_ROUTER_BOOTSTRAP_EXTRA_OPTIONS < "$PASSFILE" || exit 1
